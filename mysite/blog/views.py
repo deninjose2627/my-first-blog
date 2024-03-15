@@ -7,7 +7,7 @@ from .forms import PostForm, CommentForm
 from .models import Post, Comment
 
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 def post_detail(request, pk):
@@ -85,3 +85,4 @@ def comment_remove(request, pk):
 
 def approved_comments(self):
     return self.comments.filter(approved_comment=True)
+
