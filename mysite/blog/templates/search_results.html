@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+    <h1>Search Results</h1>
+    <p>You searched for: "{{ query }}"</p>
+    <ul>
+        {% for post in results %}
+            <li>
+                <div class="blog-container">
+                    <h2>{{ post.title }}</h2>
+        <p>{{ post.text|linebreaksbr }}</p>
+                </div>
+            </li>
+        {% empty %}
+            <li>No results found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

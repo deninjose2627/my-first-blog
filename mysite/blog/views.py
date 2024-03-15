@@ -5,11 +5,12 @@ from .forms import PostForm
 from django.contrib.auth.decorators import login_required
 from .forms import PostForm, CommentForm
 from .models import Post, Comment
+from django.shortcuts import render
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     return render(request, 'blog/post_list.html', {'posts': posts})
-
+    
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
@@ -86,3 +87,8 @@ def comment_remove(request, pk):
 def approved_comments(self):
     return self.comments.filter(approved_comment=True)
 
+
+def search_results(request):
+    query = request.GET.get('q')
+    results = Post.objects.filter(title__icontains=query)
+    return render(request, 'search_results.html', {'results': results, 'query': query})
